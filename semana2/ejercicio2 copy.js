@@ -29,7 +29,7 @@ async function main() {
         }
         console.log('Frutas disponibles: ', frutas);
       }
-     } else if (opcion === '3') {
+    } else if (opcion === '3') {
       //Salir
       console.log('Gracias por usar el programa');
     } else {
