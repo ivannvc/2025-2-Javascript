@@ -15,152 +15,90 @@
 // El promedio general de calificaciones.
 // La calificación mayor.
 // La calificación menor.
-
-
 const { ask } = require('../helpers/input');
 
+function obtenerPromedio(numeros) {
+  let total = 0;
+  for (let i = 0; i < numeros.length; i++) {
+    total = total + numeros[i];
+  }
+  const promedio = total / numeros.length;
+
+  return promedio;
+}
+
+function obtenerMayor(numeros) {
+  let mayor = numeros[0];
+  for (let i = 0; i < numeros.length; i++) {
+    if (numeros[i] > mayor) {
+      mayor = numeros[i];
+    }
+  }
+  return mayor;
+}
+
+function obtenerMenor(numeros) {
+  let menor = numeros[0];
+  for (let i = 0; i < numeros.length; i++) {
+    if (numeros[i] < menor) {
+      menor = numeros[i];
+    }
+  }
+  return menor;
+}
+
+function obtenerAprobados(numeros) {
+  let aprobados = 0;
+  let reprobados = 0;
+  for (let i = 0; i < numeros.length; i++) {
+    if (numeros[i] >= 70) {
+      aprobados++;
+    } else {
+      reprobados++;
+    }
+  }
+  return { aprobados, reprobados };
+}
+
+function analizarCalificaciones(calificaciones) {
+  const res = obtenerAprobados(calificaciones);
+  let aprobados = res.aprobados;
+  let reprobados = res.reprobados;
+  let promedio = obtenerPromedio(calificaciones);
+  let califAlta = obtenerMayor(calificaciones);
+  let califBaja = obtenerMenor(calificaciones);
+
+  return { aprobados, reprobados, promedio, califAlta, califBaja };
+}
 
 async function main() {
-  let opcion = '';
-  
-  let nombre = [];
-  let edad = [];
-  let calificacion = [];
+  let opcion = 0;
+  const alumnos = [];
 
-  while (opcion !== '4') {
-    opcion = await ask('¿Qué deseas hacer? \n1. Agregar una alumno \n2. Eliminar una fruta \n3. Imprimir \n4. Salir \n');
-    if (opcion === '1') {
-        //const personas = [
-      //Agregarnombre
-      let NombreNuevo = await ask('¿Qué nombre deseas agregar?: ');
-      nombre.push(NombreNuevo);
-      //console.log(`Fruta agregada: ${frutaNueva}`);
-      //console.log('Frutas disponibles: ', frutas);
+  while (opcion !== 3) {
+    opcion = Number(await ask(`Selecciona la opcion deseada \n1: Agregar Alumno: \n2: Mostrar resultados: \n3: Salir : `));
+    if (opcion === 1) {
+      const nombre = await ask(`Introduce el nombre del alumno`);
+      const edad = Number(await ask(`Introduce la edad del alumno`));
+      const calificacion = Number(await ask(`Introduce la calificacion del alumno`));
+      alumnos.push({ nombre, edad, calificacion });
+    } else if (opcion === 2) {
 
-
-      //agregaedad
-      let EdadNueva = await ask('¿Qué edad deseas agregar?: ');
-      edad.push(EdadNueva);
-      //console.log(`Fruta agregada: ${frutaNueva}`);
-      //console.log('Frutas disponibles: ', frutas);
-
-
-      //agregarcalificacion
-      let CalificacionNueva = await ask('¿Qué califacion deseas agregar?: ');
-      calificacion.push(CalificacionNueva);
-      //console.log(`Fruta agregada: ${frutaNueva}`);
-      //console.log('Frutas disponibles: ', frutas);
-        
-    
-      //console.log('Alumno disponibles: ', personas);
-
-
-
-
-    } else if (opcion === '2') {
-      //Eliminar
-      if (frutas.length === 0) {
-        console.log('No hay frutas disponibles');
-        continue;
+      if (alumnos.length === 0) {
+        console.log("No hay alumnos que analizar");
       } else {
-        let frutaEliminar = await ask('¿Qué fruta deseas eliminar?: ');
-        let index = frutas.indexOf(frutaEliminar);
+        console.log(alumnos);
+        const calificaciones = [];
 
-        if (index !== -1) {
-          frutas.splice(index, 1);
-          console.log(`${frutaEliminar} ha sido eliminada `)
-        } else {
-          console.log('Fruta no encontrada ');
+        for (let i = 0; i < alumnos.length; i++) {
+          calificaciones.push(alumnos[i].calificacion);
         }
-        console.log('Frutas disponibles: ', frutas);
+        console.log(analizarCalificaciones(calificaciones));
       }
-
-    }else if (opcion === '3'){
-        console.log(`Las frutas son ${frutas}`)
-
-
-
-    }   else if (opcion === '4') {
-      //Salir
-      console.log('Gracias por usar el programa');
     } else {
-      console.log('Opción no válida');
+      console.log("Opción inválida");
     }
   }
 }
-
-
-// async function main() {
-
-//   const personas = [
-//     {
-//       nombre: "Rodrigo",
-//       edad: 36,
-//       profesion: "Desarrollador",
-//       hobbies: ["nadar", "futbol", "leer"],
-//       birthDate: "1988-08-08",
-//       saludar: function () {
-//         console.log(`Hola mi nombre es ${this.nombre} `);
-//       }
-//     },
-//     {
-//       nombre: "Claudia",
-//       edad: 36,
-//       profesion: "Desarrollador",
-//       hobbies: ["nadar", "futbol", "leer"],
-//       birthDate: "1988-08-08",
-//       saludar: function () {
-//         console.log(`Hola mi nombre es ${this.nombre} `);
-//       }
-//     },
-//     {
-//       nombre: "Heriberto",
-//       edad: 36,
-//       profesion: "Desarrollador",
-//       hobbies: ["nadar", "futbol", "leer"],
-//       birthDate: "1988-08-08",
-//       saludar: function () {
-//         console.log(`Hola mi nombre es ${this.nombre} `);
-//       }
-//     },
-//   ];
-
-//   const alumno1 = {
-//     nombre: "Yei Yei",
-//     matricula: "AL089778",
-//     promedio: 90,
-//     edad: 18,
-//     mostrarInfo: function () {
-//       console.log(`Nombre: ${this.nombre}| \nMatricula: ${this.matricula}| \nPromedio: ${this.promedio}|`);
-//       if (this.edad >= 18) {
-//         console.log("Es mayor de edad");
-//       } else {
-//         console.log("No es mayor de edad");
-//       }
-//     }
-//   }
-
-
-//     setMayorEdad: function () {
-//       if (this.edad >= 18) {
-//         this.mayorDeEdad = true;
-//       } else {
-//         this.mayorDeEdad = false;
-//       }
-//     }
-
-
-//   const alumnos = [alumno1, alumno2, alumno3];
-
-//   for (let i = 0; i < alumnos.length; i++) {
-//     alumnos[i].mostrarInfo();
-//   }
-
-//   // alumno1.mostrarInfo();
-//   // alumno2.mostrarInfo();
-//   // alumno3.mostrarInfo();
-// }
-
-
 
 main();
