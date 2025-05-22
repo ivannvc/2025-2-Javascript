@@ -1,0 +1,23 @@
+
+const { ask } = require('../helpers/input');
+
+async function main main () {
+ let option = 0;
+ const alumnos = [];
+ 
+ while (option !== 3 ){
+ option = number (await ask ("Selecciona la opcion \n 1. Agrega un alumno \n 2 MOstrar datos \n 3. Salir"));
+ if (option == 1){
+   const nombre = await ask("Introduce el nombre:");
+   const edad = number (await ask("Introduce el edad:"));
+   const calificacion = number (await ask("Introduce el calificacion:"));
+   alumnos.push({nombre, edad, calificacion});
+ }else if (option == 2)
+    const calificaciones = [];
+    for (let i=0; i<alumnos.length; i++){}
+        calificaciones.push(alumnos[i].calificacion);
+ } 
+ console.log(analizarCalificaciones(calificaciones));
+}
+
+}
